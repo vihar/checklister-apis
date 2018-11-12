@@ -9,6 +9,13 @@ from .models import Item
 from .serializers import ItemSerializer
 
 
+class StatusView(APIView):
+    def get(self, request):
+        up = {'Status': 'API Server Working 🚀'}
+        # down = {'status': 'system down and broken!'}
+        return Response(up)
+
+
 class ItemCreate(APIView):
     def post(self, request, format=None):
         serializer = ItemSerializer(data=request.data)
@@ -43,3 +50,4 @@ class ItemDetailEndpoint(APIView):
 
     def delete(self, request, pk):
         return Response({"message": "Delete Not Allowed"})
+
