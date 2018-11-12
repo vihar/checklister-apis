@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import ItemDetailEndpoint, ItemCreate
-from .authentication import FacebookLogin
+from .authentication import SocialLoginView
 from django.conf.urls import include, url
 
 
@@ -11,7 +11,5 @@ urlpatterns = [
          name='item-list'),
 
     path('item/create/', ItemCreate.as_view(), name='item-create'),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
-
+    path('social-login/', SocialLoginView.as_view(), name='social-login')
 ]

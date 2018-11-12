@@ -39,6 +39,13 @@ INSTALLED_APPS = [
 
 ]
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+    '127.0.0.1:9000',
+    'localhost:8080',
+    'localhost:8081',
+)
+
 SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQURIED = True
