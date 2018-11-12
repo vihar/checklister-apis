@@ -14,3 +14,5 @@ django-cors-headers==2.4.0
 whitenoise==4.0
 django-allauth==0.37.1
 faker==0.8.18
+djangorestframework-jwt==1.11.0
+django-rest-auth[with_social]
