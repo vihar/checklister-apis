@@ -3,10 +3,10 @@ from rest_framework import status
 
 from django.http import Http404
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
 from .models import Item
-from .serializers import ItemSerializer
+from .serializers import ItemSerializer, ItemListSerializer
 
 
 class StatusView(APIView):
@@ -26,8 +26,6 @@ class ItemCreate(APIView):
 
 
 class ItemDetailEndpoint(APIView):
-
-    permission_classes = (IsAuthenticated,)
 
     def get_object(self, pk, **kwargs):
         try:
@@ -51,3 +49,22 @@ class ItemDetailEndpoint(APIView):
     def delete(self, request, pk):
         return Response({"message": "Delete Not Allowed"})
 
+
+class ItemListAPIView(APIView):
+    def get_object(self, **kwargs):
+        try:
+            return Item.objects.all()
+        except Item.DoesNotExist:
+            raise status.Http404
+
+    def get(self, request, **kwargs):
+        items = self.get_object()
+        serializer = ItemListSerializer(items, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ItemListSerializer(data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

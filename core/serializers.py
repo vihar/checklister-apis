@@ -7,3 +7,10 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         exclude = []
+
+
+class ItemListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        exclude = []
