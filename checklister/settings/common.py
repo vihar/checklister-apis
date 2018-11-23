@@ -44,7 +44,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:9000',
     'localhost:8080',
     'localhost:8081',
-    'https://checklister-api.herokuapp.com/'
+    'checklister-api.herokuapp.com'
 )
 
 SITE_ID = 1
