@@ -34,20 +34,22 @@ class ItemDetailEndpoint(APIView):
             raise Http404
 
     def get(self, request, pk):
-        course = self.get_object(pk)
-        serializer = ItemSerializer(course)
+        item = self.get_object(pk)
+        serializer = ItemSerializer(item)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        course = self.get_object(pk)
-        serializer = ItemSerializer(course, data=request.data, partial=True)
+        item = self.get_object(pk)
+        serializer = ItemSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        return Response({"message": "Delete Not Allowed"})
+        item = self.get_object(pk)
+        item.delete()
+        return Response({"message": "Deleted"})
 
 
 class ItemListAPIView(APIView):
