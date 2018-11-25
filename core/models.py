@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
+# from django.contrib.postgres.fields import JSONField
 
 
 class TimeAuditModel(models.Model):
@@ -16,9 +16,14 @@ class TimeAuditModel(models.Model):
 class Item(TimeAuditModel):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    description_html = models.TextField(editable=False, blank=True)
-    details = JSONField(null=True)
     is_complete = models.BooleanField(default=False)
+    PRIORITY = (
+        ('H', 'High'),
+        ('M', 'Medium'),
+        ('L', 'Low'),
+        ('O', 'Other'),
+    )
+    priority = models.CharField(max_length=255, choices=PRIORITY, blank=True)
     user = models.ForeignKey(User, related_name='items',
                              on_delete=models.CASCADE)
 
